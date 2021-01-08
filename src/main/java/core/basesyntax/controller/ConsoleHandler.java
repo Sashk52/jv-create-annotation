@@ -13,29 +13,32 @@ import java.util.regex.Pattern;
 public class ConsoleHandler {
     private static final String NAME_REGEX = "[a-zA-Z]+";
     private static final String EMAIL_REGEX = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
-    BetDao betDao = new BetDaoImpl();
-    UserDao<User> users = new UserDaoImpl();
+    private static final String WRONG_DATA_INSERTION = "Будь ласка, введіть коректні дані";
+    private static final String WHITESPACE_SEPARATOR = " ";
+    private static final String QUIT_SIGH = "q";
+    private BetDao betDao = new BetDaoImpl();
+    private UserDao<User> users = new UserDaoImpl();
 
-    Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
     public void handle() {
         while (true) {
             String command = scanner.nextLine();
-            if (command.equalsIgnoreCase("q")) {
+            if (command.equalsIgnoreCase(QUIT_SIGH)) {
                 return;
             }
             Bet bet = null;
             try {
-                String[] betData = command.split(" ");
+                String[] betData = command.split(WHITESPACE_SEPARATOR);
                 int value = Integer.parseInt(betData[0]);
                 double risk = Double.parseDouble(betData[1]);
                 bet = new Bet(value, risk);
             } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-                System.out.println("Будь ласка, введіть коректні дані");
+                System.out.println(WRONG_DATA_INSERTION);
             }
             if (bet != null) {
                 betDao.add(bet);
-                System.out.println(bet == null ? null : bet.toString());
+                System.out.println(bet);
 
             }
         }
@@ -44,14 +47,14 @@ public class ConsoleHandler {
     public void handleUser() {
         while (true) {
             String command = scanner.nextLine();
-            if (command.equalsIgnoreCase("q")) {
+            if (command.equalsIgnoreCase(QUIT_SIGH)) {
                 return;
             }
             User user = null;
             Pattern patternName = Pattern.compile(NAME_REGEX);
             Pattern patternEmail = Pattern.compile(EMAIL_REGEX);
             try {
-                String[] betData = command.split(" ");
+                String[] betData = command.split(WHITESPACE_SEPARATOR);
                 Matcher matcherName = patternName.matcher(betData[0]);
                 Matcher matcherEmail = patternEmail.matcher(betData[1]);
                 if (!matcherName.matches() || !matcherEmail.matches()) {
@@ -59,11 +62,11 @@ public class ConsoleHandler {
                 }
                 user = new User(betData[0], betData[1]);
             } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
-                System.out.println("Будь ласка, введіть коректні дані");
+                System.out.println(WRONG_DATA_INSERTION);
             }
             if (user != null) {
                 users.save(user);
-                System.out.println(user == null ? null : user.toString());
+                System.out.println(user);
                 return;
             }
         }
