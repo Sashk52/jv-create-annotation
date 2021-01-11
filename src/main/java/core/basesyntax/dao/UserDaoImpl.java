@@ -1,11 +1,13 @@
 package core.basesyntax.dao;
 
 import core.basesyntax.db.Storage;
+import core.basesyntax.lib.Dao;
 import core.basesyntax.model.User;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@Dao
 public class UserDaoImpl implements UserDao<User> {
 
     @Override
@@ -24,7 +26,7 @@ public class UserDaoImpl implements UserDao<User> {
     }
 
     @Override
-    public void update(User user, String [] params) {
+    public void update(User user, String[] params) {
         if (Storage.users.contains(user)) {
             int index = Storage.users.indexOf(user);
             Storage.users.remove(user);
