@@ -15,16 +15,16 @@ public class ConsoleHandler {
     private static final String EMAIL_REGEX = "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
     private static final String WRONG_DATA_INSERTION = "Будь ласка, введіть коректні дані";
     private static final String WHITESPACE_SEPARATOR = " ";
-    private static final String QUIT_SIGH = "q";
+    private static final String QUIT_SIGN = "q";
     private BetDao betDao = new BetDaoImpl();
-    private UserDao<User> users = new UserDaoImpl();
+    private UserDao<User> userDao = new UserDaoImpl<User>();
 
     private Scanner scanner = new Scanner(System.in);
 
     public void handle() {
         while (true) {
             String command = scanner.nextLine();
-            if (command.equalsIgnoreCase(QUIT_SIGH)) {
+            if (command.equalsIgnoreCase(QUIT_SIGN)) {
                 return;
             }
             Bet bet = null;
@@ -47,7 +47,7 @@ public class ConsoleHandler {
     public void handleUser() {
         while (true) {
             String command = scanner.nextLine();
-            if (command.equalsIgnoreCase(QUIT_SIGH)) {
+            if (command.equalsIgnoreCase(QUIT_SIGN)) {
                 return;
             }
             User user = null;
@@ -58,14 +58,15 @@ public class ConsoleHandler {
                 Matcher matcherName = patternName.matcher(betData[0]);
                 Matcher matcherEmail = patternEmail.matcher(betData[1]);
                 if (!matcherName.matches() || !matcherEmail.matches()) {
-                    throw new NumberFormatException();
+                    throw new NumberFormatException("Введені некоректні дані");
                 }
                 user = new User(betData[0], betData[1]);
             } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
                 System.out.println(WRONG_DATA_INSERTION);
             }
+
             if (user != null) {
-                users.save(user);
+                userDao.save(user);
                 System.out.println(user);
                 return;
             }
