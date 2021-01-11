@@ -1,16 +1,17 @@
 package core.basesyntax.dao;
 
+import core.basesyntax.model.User;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserDao<T> {
-    Optional<T> get(long id);
+public interface UserDao {
+    Optional<User> get(long id);
 
-    List<T> getAll();
+    List<User> getAll();
 
-    void save(T t);
+    void save(User user);
 
-    void update(T t);
+    void update(User user);
 
-    void delete(T t);
+    void delete(User user);
 }
