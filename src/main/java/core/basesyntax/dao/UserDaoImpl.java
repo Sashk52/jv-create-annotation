@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Dao
-public class UserDaoImpl implements UserDao<User> {
+public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> get(long id) {

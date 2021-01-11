@@ -26,7 +26,7 @@ public class Injector {
                 if (objectdao.getClass().isAnnotationPresent(Dao.class)) {
                     field.set(instance, objectdao);
                 } else {
-                    throw new AnnotationException("Can't find @Dao");
+                    throw new AnnotationException("Class doesn't have annotation @Dao");
                 }
             }
 

@@ -4,11 +4,10 @@ import core.basesyntax.dao.BetDao;
 import core.basesyntax.dao.BetDaoImpl;
 import core.basesyntax.dao.UserDao;
 import core.basesyntax.dao.UserDaoImpl;
-import core.basesyntax.model.User;
 
 public class Factory {
     private static BetDao betDao;
-    private static UserDao<User> userDao;
+    private static UserDao userDao;
 
     public static BetDao getBetDao() {
         if (betDao == null) {
@@ -17,7 +16,7 @@ public class Factory {
         return betDao;
     }
 
-    public static UserDao<User> getUserDao() {
+    public static UserDao getUserDao() {
         if (userDao == null) {
             userDao = new UserDaoImpl();
         }

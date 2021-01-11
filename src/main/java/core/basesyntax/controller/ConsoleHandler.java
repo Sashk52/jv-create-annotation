@@ -18,7 +18,7 @@ public class ConsoleHandler {
     @Inject
     private BetDao betDao;
     @Inject
-    private UserDao<User> userDao;
+    private UserDao userDao;
 
     private Scanner scanner = new Scanner(System.in);
 
