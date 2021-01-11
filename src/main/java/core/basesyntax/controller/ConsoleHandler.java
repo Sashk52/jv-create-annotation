@@ -58,10 +58,10 @@ public class ConsoleHandler {
                 Matcher matcherName = patternName.matcher(betData[0]);
                 Matcher matcherEmail = patternEmail.matcher(betData[1]);
                 if (!matcherName.matches() || !matcherEmail.matches()) {
-                    throw new NumberFormatException("Введені некоректні дані");
+                    throw new RuntimeException();
                 }
                 user = new User(betData[0], betData[1]);
-            } catch (ArrayIndexOutOfBoundsException | NumberFormatException e) {
+            } catch (RuntimeException e) {
                 System.out.println(WRONG_DATA_INSERTION);
             }
 
