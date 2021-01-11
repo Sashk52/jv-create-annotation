@@ -1,9 +1,8 @@
 package core.basesyntax.controller;
 
 import core.basesyntax.dao.BetDao;
-import core.basesyntax.dao.BetDaoImpl;
 import core.basesyntax.dao.UserDao;
-import core.basesyntax.dao.UserDaoImpl;
+import core.basesyntax.lib.Inject;
 import core.basesyntax.model.Bet;
 import core.basesyntax.model.User;
 import java.util.Scanner;
@@ -16,8 +15,10 @@ public class ConsoleHandler {
     private static final String WRONG_DATA_INSERTION = "Будь ласка, введіть коректні дані";
     private static final String WHITESPACE_SEPARATOR = " ";
     private static final String QUIT_SIGN = "q";
-    private BetDao betDao = new BetDaoImpl();
-    private UserDao<User> userDao = new UserDaoImpl<User>();
+    @Inject
+    private BetDao betDao;
+    @Inject
+    private UserDao<User> userDao;
 
     private Scanner scanner = new Scanner(System.in);
 
@@ -64,7 +65,6 @@ public class ConsoleHandler {
             } catch (RuntimeException e) {
                 System.out.println(WRONG_DATA_INSERTION);
             }
-
             if (user != null) {
                 userDao.save(user);
                 System.out.println(user);
